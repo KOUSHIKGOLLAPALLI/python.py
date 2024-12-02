@@ -1,19 +1,17 @@
-# Build Stage
-FROM python:3.11-slim
+# Use an official Python runtime as a parent image
+FROM python:3.9-slim
 
-# Set working directory to /app
+# Set the working directory in the container
 WORKDIR /app
 
-# Install dependencies listed in requirements.txt
-RUN pip install -r requirements.txt
+# Copy the current directory contents into the container at /app
+COPY . /app
 
-# Copy python.py specifically (only if python.py is a separate file, 
-# otherwise it is already included in the previous COPY command)
-COPY . .
+# Install any dependencies in requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Expose port 5000 for the app to run
+# Expose the port the app runs on
 EXPOSE 5000
 
-# Define the command to run the application
+# Run the Python app when the container starts
 CMD ["python", "python.py"]
-
